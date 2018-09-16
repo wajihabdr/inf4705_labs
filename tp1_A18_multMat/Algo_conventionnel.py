@@ -27,10 +27,12 @@ if expoMatrice1 == expoMatrice2:
         matrice2[i] = line2.split('\t')
 
     print('Matrice 1 :')
-    print(matrice1)
+    for i in range(N):
+        print(matrice1[i])
 
     print('\n' + 'Matrice 2 :')
-    print(matrice2)
+    for i in range(N):
+        print(matrice2[i])
 
     #
     ## Algo Conventionnel
@@ -43,11 +45,11 @@ if expoMatrice1 == expoMatrice2:
             for k in range(N):
                 result[i][j] += int(matrice1[i][k]) * int(matrice2[k][j])
     print('\n' + 'Result :')
-    print(result)
+    for i in range(N):
+        print(result[i])
 
 
 else:
     print('ERREUR !!!')
     print('Les deux matrices sont de taille differente')
-
 
