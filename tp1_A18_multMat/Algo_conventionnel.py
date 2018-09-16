@@ -2,29 +2,51 @@ import sys
 
 # Permet la lecture d'une matrice
 # A besoin de path du fichier
-path = './exemple/exemplaires/serie1/'
-fileName = path + 'ex_2.1'
+path = './exemple/exemplaires/'
 
-fichier = open(fileName, 'r')
-N = int(fichier.readline())
+fileName1 = path + str(sys.argv[1])
+fileName2 = path + str(sys.argv[2])
 
-print('N = ' + str(N))
+fichier1 = open(fileName1, 'r')
+fichier2 = open(fileName2, 'r')
 
-matrice = [None]*(2**N)
+expoMatrice1 = int(fichier1.readline())
+expoMatrice2 = int(fichier2.readline())
+if expoMatrice1 == expoMatrice2:
+    N = expoMatrice1*2
+    print('N = ' + str(N))
 
-for i in range(2**N):
-    line = fichier.readline().replace('\t\n', '')
-    matrice[i] = line.split('\t')
+    matrice1 = [None]*N
+    matrice2 = [None]*N
 
-print('Ma matrice \n')
-print(matrice)
+    for i in range(N):
+        line1 = fichier1.readline().replace('\t\n', '')
+        matrice1[i] = line1.split('\t')
 
-# Algo Conventionnel
-result = [[0 for x in range(2**N)] for y in range(2**N)]
+        line2 = fichier2.readline().replace('\t\n', '')
+        matrice2[i] = line2.split('\t')
 
-for i in range(2**N):
-    for j in range(2**N):
-        for k in range(2**N):
-            result[i][j] += int(matrice[i][k]) * int(matrice[k][j])
-print('\n' + 'Result :')
-print(result)
+    print('Matrice 1 :')
+    print(matrice1)
+
+    print('\n' + 'Matrice 2 :')
+    print(matrice2)
+
+    #
+    ## Algo Conventionnel
+    #
+
+    result = [[0 for x in range(N)] for y in range(N)]
+
+    for i in range(N):
+        for j in range(N):
+            for k in range(N):
+                result[i][j] += int(matrice1[i][k]) * int(matrice2[k][j])
+    print('\n' + 'Result :')
+    for i in range(N):
+        print(result[i])
+
+
+else:
+    print('ERREUR !!!')
+    print('Les deux matrices sont de taille differente')
