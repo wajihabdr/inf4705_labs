@@ -1,0 +1,149 @@
+import sys
+
+# Permet la lecture d'une matrice
+# A besoin de path du fichier
+path = './exemple/exemplaires/'
+
+fileName1 = path + str(sys.argv[1])
+fileName2 = path + str(sys.argv[2])
+
+fichier1 = open(fileName1, 'r')
+fichier2 = open(fileName2, 'r')
+
+expoMatrice1 = int(fichier1.readline())
+expoMatrice2 = int(fichier2.readline())
+
+if expoMatrice1 == expoMatrice2:
+    N = expoMatrice1*2
+    print('N = ' + str(N))
+
+    A = [None]*N
+    B = [None]*N
+
+    for i in range(N):
+        line1 = fichier1.readline().replace('\t\n', '')
+        A[i] = line1.split('\t')
+
+        line2 = fichier2.readline().replace('\t\n', '')
+        B[i] = line2.split('\t')
+
+    print('Matrice A :')
+    for i in range(N):
+        print(A[i])
+
+    print('\n' + 'Matrice B :')
+    for i in range(N):
+        print(B[i])
+
+    # addition conventionnelle
+    def additionConventionnelle(A,B):
+        C = [[0 for x in range(N)] for y in range(N)]
+        for i in range(N):
+            for j in range(N):
+                C[i][j] = A[i][j] + B[i][j]
+        return C
+
+    # soustraction conventionnelle
+    def soustractionConventionnelle(A,B):
+        C = [[0 for x in range(N)] for y in range(N)]
+        for i in range(N):
+            for j in range(N):
+                C[i][j] = A[i][j] - B[i][j]
+        return C
+
+    #multiplication conventionnelle ==> algo conventionnelle
+    def produitMatriceConventionnelle(A, B) :
+        C = [[0 for x in range(N)] for y in range(N)]
+        for i in range(N):
+            for j in range(N):
+                for k in range(N):
+                    C[i][j] += int(A[i][k]) * int(B[k][j])
+        return C
+    
+    # multiplication de matrice à l'aide de l'algorithme de strassen
+    def strassen(A,B):
+        if N <= 2 # LEAF_SIZE : #taille à partir de laquelle on arrête de faire une multiplication à l'aide de  
+                            # l'algorithme de strassen pour en faire une avec l'algo conventionnel
+            return produitMatriceConventionnelle(A,B)
+        else : 
+            # division de la matrice en 4 sous-matrices
+            A11 = [[0 for x in range(N/2)] for y in range(N/2)]
+            A12 = [[0 for x in range(N/2)] for y in range(N/2)]
+            A21 = [[0 for x in range(N/2)] for y in range(N/2)]
+            A22 = [[0 for x in range(N/2)] for y in range(N/2)]
+            B11 = [[0 for x in range(N/2)] for y in range(N/2)]
+            B12 = [[0 for x in range(N/2)] for y in range(N/2)]
+            B21 = [[0 for x in range(N/2)] for y in range(N/2)]
+            B22 = [[0 for x in range(N/2)] for y in range(N/2)]
+
+            for i in range(N/2):
+                for j in range(N/2):
+                    A11[i][j] = A[i][j]  #haut à gauche
+                    A12[i][j] = A[i][j + N/2] #haut à droite
+                    A21[i][j] = A[i + N/2][j] #bas à droite 
+                    A22[i][j] = A[i + N/2][j + N/2] #bas à gauche
+
+                    B11[i][j] = A[i][j]  #haut à gauche
+                    B12[i][j] = A[i][j + N/2] #haut à droite
+                    B21[i][j] = A[i + N/2][j] #bas à droite 
+                    B22[i][j] = A[i + N/2][j + N/2] #bas à gauche
+            
+            aResultatMatrice = [[0 for x in range (N/2)] for y in range(N/2)]
+            bResultatMatrice = [[0 for x in range (N/2)] for y in range(N/2)]
+
+            #Calculs des différentes multiplications M
+            aResultatMatrice = additionConventionnelle(A11,A22)
+            bResultatMatrice = additionConventionnelle(B11,B22)
+            M1 = strassen(aResultatMatrice,bResultatMatrice) 
+
+            aResultatMatrice = additionConventionnelle(A21,A22)
+            M2 = strassen(aResultatMatrice,B11)   
+
+            bResultatMatrice = soustractionConventionnelle(B12,B22)
+            M3 = strassen(A11,bResultatMatrice)
+
+            bResultatMatrice = soustractionConventionnelle(B21,B11)
+            M4 = strassen(A22,bResultatMatrice) 
+
+            aResultatMatrice = additionConventionnelle(A11,A12)
+            M5 = strassen(aResultatMatrice,B22)  
+
+            aResultatMatrice = soustractionConventionnelle(A21,A11)
+            bResultatMatrice = additionConventionnelle(B11,B12)
+            M6 = strassen(aResultatMatrice,bResultatMatrice)
+
+            aResultatMatrice = soustractionConventionnelle(A12,A22)
+            bResultatMatrice = additionConventionnelle(B21,B22)
+            M7 = strassen(aResultatMatrice,bResultatMatrice)
+
+            #calculs des différentes parties de la matrice résultat
+            aResultatMatrice = additionConventionnelle(M1,M4)
+            bResultatMatrice = soustractionConventionnelle(aResultatMatrice,M5)
+            C11 = additionConventionnelle(bResultatMatrice, M7)
+
+            C12 = additionConventionnelle(M3,M5)
+            C21 = additionConventionnelle(M2,M4)
+
+            aResultatMatrice = soustractionConventionnelle(M1,M2)
+            bResultatMatrice = additionConventionnelle(aResultatMatrice,M3)
+            C22 = additionConventionnelle(bResultatMatrice,M6)
+
+            #matrice resultat
+            C = [[0 for x in range(N)] for y in range(N)]
+            for i in range(N/2):
+                for j in range(N/2):
+                    C[i][j] = C11[i][j]
+                    C[i][j + N/2] = C12[i][j]
+                    C[i + N/2][j] = C21[i][j]
+                    C[i + N/2][j + N/2] = C22[i][j]
+            return C
+
+    print('\n' + 'Result :')
+    resultat = strassen(A,B)
+    for i in range (N):
+        print(resultat[i])
+              
+else:
+    print('ERREUR !!!')
+    print('Les deux matrices sont de taille differente')
+
