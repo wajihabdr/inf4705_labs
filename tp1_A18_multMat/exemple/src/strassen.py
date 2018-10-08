@@ -171,7 +171,8 @@ if expoMatrice1 == expoMatrice2:
 
     if '-t' in options:  # On imprime le temps d'exécution
         interval = end_time - start_time
-        print('\n' + 'Temps d execution :' + str(interval) + ' sec')
+        print(interval)
+        #print('\n' + 'Temps d execution :' + str(interval) + ' sec')
 
 else:
     print('ERREUR !!!')
