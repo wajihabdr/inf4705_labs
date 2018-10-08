@@ -56,7 +56,6 @@ def produitMatriceConventionnelle(A, B) :
 
 if expoMatrice1 == expoMatrice2:
     N = expoMatrice1*2
-    print('N = ' + str(N))
 
     A = [None]*N
     B = [None]*N
