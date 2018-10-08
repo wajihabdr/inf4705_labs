@@ -1,4 +1,6 @@
 import sys
+from optparse import OptionParser
+from math import ceil, log
 
 # Permet la lecture d'une matrice
 # A besoin de path du fichier
@@ -27,6 +29,7 @@ if expoMatrice1 == expoMatrice2:
         line2 = fichier2.readline().replace('\t\n', '')
         B[i] = line2.split('\t')
 
+
     print('Matrice A :')
     for i in range(N):
         print(A[i])
@@ -37,59 +40,64 @@ if expoMatrice1 == expoMatrice2:
 
     # addition conventionnelle
     def additionConventionnelle(A,B):
-        C = [[0 for x in range(N)] for y in range(N)]
-        for i in range(N):
-            for j in range(N):
-                C[i][j] = A[i][j] + B[i][j]
+        taille = len(A)
+        C = [[0 for x in range(taille)] for y in range(taille)]
+        for i in range(taille):
+            for j in range(taille):
+                C[i][j] = int(A[i][j]) + int(B[i][j])
         return C
 
     # soustraction conventionnelle
     def soustractionConventionnelle(A,B):
-        C = [[0 for x in range(N)] for y in range(N)]
-        for i in range(N):
-            for j in range(N):
-                C[i][j] = A[i][j] - B[i][j]
+        taille = len(A)
+        C = [[0 for x in range(taille)] for y in range(taille)]
+        for i in range(0,taille):
+            for j in range(0,taille):
+                C[i][j] = int(A[i][j]) - int(B[i][j])
         return C
 
     #multiplication conventionnelle ==> algo conventionnelle
     def produitMatriceConventionnelle(A, B) :
-        C = [[0 for x in range(N)] for y in range(N)]
-        for i in range(N):
-            for j in range(N):
-                for k in range(N):
+        taille = len(A)
+        C = [[0 for x in range(taille)] for y in range(taille)]
+        for i in range(taille):
+            for j in range(taille):
+                for k in range(taille):
                     C[i][j] += int(A[i][k]) * int(B[k][j])
         return C
     
     # multiplication de matrice à l'aide de l'algorithme de strassen
     def strassen(A,B):
-        if N <= 2 # LEAF_SIZE : #taille à partir de laquelle on arrête de faire une multiplication à l'aide de  
+        N = len (A)
+        if N <= LEAF_SIZE :  # LEAF_SIZE : taille à partir de laquelle on arrête de faire une multiplication à l'aide de  
                             # l'algorithme de strassen pour en faire une avec l'algo conventionnel
             return produitMatriceConventionnelle(A,B)
         else : 
             # division de la matrice en 4 sous-matrices
-            A11 = [[0 for x in range(N/2)] for y in range(N/2)]
-            A12 = [[0 for x in range(N/2)] for y in range(N/2)]
-            A21 = [[0 for x in range(N/2)] for y in range(N/2)]
-            A22 = [[0 for x in range(N/2)] for y in range(N/2)]
-            B11 = [[0 for x in range(N/2)] for y in range(N/2)]
-            B12 = [[0 for x in range(N/2)] for y in range(N/2)]
-            B21 = [[0 for x in range(N/2)] for y in range(N/2)]
-            B22 = [[0 for x in range(N/2)] for y in range(N/2)]
+            taille = N//2
+            A11 = [[0 for x in range(0,taille)] for y in range(0,taille)]
+            A12 = [[0 for x in range(0,taille)] for y in range(0,taille)]
+            A21 = [[0 for x in range(0,taille)] for y in range(0,taille)]
+            A22 = [[0 for x in range(0,taille)] for y in range(0,taille)]
+            B11 = [[0 for x in range(0,taille)] for y in range(0,taille)]
+            B12 = [[0 for x in range(0,taille)] for y in range(0,taille)]
+            B21 = [[0 for x in range(0,taille)] for y in range(0,taille)]
+            B22 = [[0 for x in range(0,taille)] for y in range(0,taille)]
 
-            for i in range(N/2):
-                for j in range(N/2):
+            for i in range(0,taille):
+                for j in range(0,taille):
                     A11[i][j] = A[i][j]  #haut à gauche
-                    A12[i][j] = A[i][j + N/2] #haut à droite
-                    A21[i][j] = A[i + N/2][j] #bas à droite 
-                    A22[i][j] = A[i + N/2][j + N/2] #bas à gauche
+                    A12[i][j] = A[i][j + taille] #haut à droite
+                    A21[i][j] = A[i + taille][j] #bas à droite 
+                    A22[i][j] = A[i + taille][j + taille] #bas à gauche
 
-                    B11[i][j] = A[i][j]  #haut à gauche
-                    B12[i][j] = A[i][j + N/2] #haut à droite
-                    B21[i][j] = A[i + N/2][j] #bas à droite 
-                    B22[i][j] = A[i + N/2][j + N/2] #bas à gauche
+                    B11[i][j] = B[i][j]  #haut à gauche
+                    B12[i][j] = B[i][j + taille] #haut à droite
+                    B21[i][j] = B[i + taille][j] #bas à droite 
+                    B22[i][j] = B[i + taille][j + taille] #bas à gauche
             
-            aResultatMatrice = [[0 for x in range (N/2)] for y in range(N/2)]
-            bResultatMatrice = [[0 for x in range (N/2)] for y in range(N/2)]
+            aResultatMatrice = [[0 for x in range (taille)] for y in range(taille)]
+            bResultatMatrice = [[0 for x in range (taille)] for y in range(taille)]
 
             #Calculs des différentes multiplications M
             aResultatMatrice = additionConventionnelle(A11,A22)
@@ -130,20 +138,34 @@ if expoMatrice1 == expoMatrice2:
 
             #matrice resultat
             C = [[0 for x in range(N)] for y in range(N)]
-            for i in range(N/2):
-                for j in range(N/2):
+            for i in range(taille):
+                for j in range(taille):
                     C[i][j] = C11[i][j]
-                    C[i][j + N/2] = C12[i][j]
-                    C[i + N/2][j] = C21[i][j]
-                    C[i + N/2][j + N/2] = C22[i][j]
+                    C[i][j + taille] = C12[i][j]
+                    C[i + taille][j] = C21[i][j]
+                    C[i + taille][j + taille] = C22[i][j]
             return C
 
     print('\n' + 'Result :')
+    if __name__ == "__main__":
+        parser = OptionParser()
+    parser.add_option("-i", dest="filename", default="2000.in",
+         help="input file with two matrices", metavar="FILE")
+    parser.add_option("-l", dest="LEAF_SIZE", default="8",
+         help="when do you start using ikj", metavar="LEAF_SIZE")
+    (options, args) = parser.parse_args()
+
+    LEAF_SIZE = options.LEAF_SIZE
+    A, B = read(options.filename)
+
+  #  C = strassen(A, B)
+    
     resultat = strassen(A,B)
+    #printMatrix(resultat)
     for i in range (N):
         print(resultat[i])
               
 else:
     print('ERREUR !!!')
-    print('Les deux matrices sont de taille differente')
+    print('Les deux matrices sont de taille differentes')
 
