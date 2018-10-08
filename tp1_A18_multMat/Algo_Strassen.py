@@ -75,14 +75,14 @@ if expoMatrice1 == expoMatrice2:
         else : 
             # division de la matrice en 4 sous-matrices
             taille = N//2
-            A11 = [[0 for x in range(0,taille)] for y in range(0,taille)]
-            A12 = [[0 for x in range(0,taille)] for y in range(0,taille)]
-            A21 = [[0 for x in range(0,taille)] for y in range(0,taille)]
-            A22 = [[0 for x in range(0,taille)] for y in range(0,taille)]
-            B11 = [[0 for x in range(0,taille)] for y in range(0,taille)]
-            B12 = [[0 for x in range(0,taille)] for y in range(0,taille)]
-            B21 = [[0 for x in range(0,taille)] for y in range(0,taille)]
-            B22 = [[0 for x in range(0,taille)] for y in range(0,taille)]
+            A11 = [[0 for x in range(taille)] for y in range(taille)]
+            A12 = [[0 for x in range(taille)] for y in range(taille)]
+            A21 = [[0 for x in range(taille)] for y in range(taille)]
+            A22 = [[0 for x in range(taille)] for y in range(taille)]
+            B11 = [[0 for x in range(taille)] for y in range(taille)]
+            B12 = [[0 for x in range(taille)] for y in range(taille)]
+            B21 = [[0 for x in range(taille)] for y in range(taille)]
+            B22 = [[0 for x in range(taille)] for y in range(taille)]
 
             for i in range(0,taille):
                 for j in range(0,taille):

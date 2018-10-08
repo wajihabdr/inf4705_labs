@@ -54,7 +54,29 @@ def soustractionConventionnelle(A,B):
 ## Algo Diviser et règner
 #
 def divideToConquer(A,B): 
-    taille = len(A)
+    tailleA = len(A)
+    tailleB = len(B)
+    sousTailleA = len(A)//2
+    sousTailleB = len(B)//2
     if taille == 1:
         return [[A[0][0] *B[0][0]]]
+    else :
+        A1 = [[0 for x in range(sousTailleA)] for y in range(sousTailleA)]]
+        A2 = [[0 for x in range(sousTailleA)] for y in range(sousTailleA)]]
+        A3 = [[0 for x in range(sousTailleA)] for y in range(sousTailleA)]]
+        A4 = [[0 for x in range(sousTailleA)] for y in range(sousTailleA)]]
+        B1 = [[0 for x in range(sousTailleB)] for y in range(sousTailleB)]]
+        B2 = [[0 for x in range(sousTailleB)] for y in range(sousTailleB)]]
+        B3 = [[0 for x in range(sousTailleB)] for y in range(sousTailleB)]]
+        B4 = [[0 for x in range(sousTailleB)] for y in range(sousTailleB)]]
+
+        A1B1 = divideToConquer(A1,B1) #ae
+        A1B2 = divideToConquer(A1,B1) #af
+        A2B3 = divideToConquer(A1,B1) #bg
+        A2B4 = divideToConquer(A1,B1) #bf
+        A3B1 = divideToConquer(A1,B1) #ce
+        A3B4 = divideToConquer(A1,B1) #cf
+        A4B3 = divideToConquer(A1,B1) #dg
+        A4B4 = divideToConquer(A1,B1) #dh
+
     
