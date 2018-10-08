@@ -1,6 +1,4 @@
 import sys
-from optparse import OptionParser
-from math import ceil, log
 
 # Permet la lecture d'une matrice
 # A besoin de path du fichier
@@ -14,6 +12,10 @@ fichier2 = open(fileName2, 'r')
 
 expoMatrice1 = int(fichier1.readline())
 expoMatrice2 = int(fichier2.readline())
+
+# LEAF_SIZE : taille à partir de laquelle on arrête de faire une multiplication à l'aide de  
+# l'algorithme de strassen pour en faire une avec l'algo conventionnel
+LEAF_SIZE = input('Choose the leaf size : ')
 
 if expoMatrice1 == expoMatrice2:
     N = expoMatrice1*2
@@ -69,8 +71,7 @@ if expoMatrice1 == expoMatrice2:
     # multiplication de matrice à l'aide de l'algorithme de strassen
     def strassen(A,B):
         N = len (A)
-        if N <= LEAF_SIZE :  # LEAF_SIZE : taille à partir de laquelle on arrête de faire une multiplication à l'aide de  
-                            # l'algorithme de strassen pour en faire une avec l'algo conventionnel
+        if N <= int(LEAF_SIZE) : 
             return produitMatriceConventionnelle(A,B)
         else : 
             # division de la matrice en 4 sous-matrices
@@ -147,21 +148,8 @@ if expoMatrice1 == expoMatrice2:
             return C
 
     print('\n' + 'Result :')
-    if __name__ == "__main__":
-        parser = OptionParser()
-    parser.add_option("-i", dest="filename", default="2000.in",
-         help="input file with two matrices", metavar="FILE")
-    parser.add_option("-l", dest="LEAF_SIZE", default="8",
-         help="when do you start using ikj", metavar="LEAF_SIZE")
-    (options, args) = parser.parse_args()
-
-    LEAF_SIZE = options.LEAF_SIZE
-    A, B = read(options.filename)
-
-  #  C = strassen(A, B)
     
     resultat = strassen(A,B)
-    #printMatrix(resultat)
     for i in range (N):
         print(resultat[i])
               
