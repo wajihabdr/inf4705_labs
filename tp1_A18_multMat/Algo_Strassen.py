@@ -17,6 +17,34 @@ expoMatrice2 = int(fichier2.readline())
 # l'algorithme de strassen pour en faire une avec l'algo conventionnel
 LEAF_SIZE = input('Choose the leaf size : ')
 
+# addition conventionnelle
+def additionConventionnelle(A,B):
+    taille = len(A)
+    C = [[0 for x in range(taille)] for y in range(taille)]
+    for i in range(taille):
+        for j in range(taille):
+            C[i][j] = int(A[i][j]) + int(B[i][j])
+    return C
+
+# soustraction conventionnelle
+def soustractionConventionnelle(A,B):
+    taille = len(A)
+    C = [[0 for x in range(taille)] for y in range(taille)]
+    for i in range(0,taille):
+        for j in range(0,taille):
+            C[i][j] = int(A[i][j]) - int(B[i][j])
+    return C
+
+#multiplication conventionnelle ==> algo conventionnelle
+def produitMatriceConventionnelle(A, B) :
+    taille = len(A)
+    C = [[0 for x in range(taille)] for y in range(taille)]
+    for i in range(taille):
+        for j in range(taille):
+            for k in range(taille):
+                C[i][j] += int(A[i][k]) * int(B[k][j])
+    return C
+
 if expoMatrice1 == expoMatrice2:
     N = expoMatrice1*2
     print('N = ' + str(N))
@@ -31,7 +59,6 @@ if expoMatrice1 == expoMatrice2:
         line2 = fichier2.readline().replace('\t\n', '')
         B[i] = line2.split('\t')
 
-
     print('Matrice A :')
     for i in range(N):
         print(A[i])
@@ -39,34 +66,6 @@ if expoMatrice1 == expoMatrice2:
     print('\n' + 'Matrice B :')
     for i in range(N):
         print(B[i])
-
-    # addition conventionnelle
-    def additionConventionnelle(A,B):
-        taille = len(A)
-        C = [[0 for x in range(taille)] for y in range(taille)]
-        for i in range(taille):
-            for j in range(taille):
-                C[i][j] = int(A[i][j]) + int(B[i][j])
-        return C
-
-    # soustraction conventionnelle
-    def soustractionConventionnelle(A,B):
-        taille = len(A)
-        C = [[0 for x in range(taille)] for y in range(taille)]
-        for i in range(0,taille):
-            for j in range(0,taille):
-                C[i][j] = int(A[i][j]) - int(B[i][j])
-        return C
-
-    #multiplication conventionnelle ==> algo conventionnelle
-    def produitMatriceConventionnelle(A, B) :
-        taille = len(A)
-        C = [[0 for x in range(taille)] for y in range(taille)]
-        for i in range(taille):
-            for j in range(taille):
-                for k in range(taille):
-                    C[i][j] += int(A[i][k]) * int(B[k][j])
-        return C
     
     # multiplication de matrice à l'aide de l'algorithme de strassen
     def strassen(A,B):
@@ -147,7 +146,7 @@ if expoMatrice1 == expoMatrice2:
                     C[i + taille][j + taille] = C22[i][j]
             return C
 
-    print('\n' + 'Result :')
+    print('\n' + 'Result of the multiplication through the Algorithm of Strassen :')
     
     resultat = strassen(A,B)
     for i in range (N):
