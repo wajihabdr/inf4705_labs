@@ -16,7 +16,7 @@ expoMatrice2 = int(fichier2.readline())
 
 # LEAF_SIZE : taille à partir de laquelle on arrête de faire une multiplication à l'aide de  
 # l'algorithme de strassen pour en faire une avec l'algo conventionnel
-LEAF_SIZE = input('Choose the leaf size : ')
+LEAF_SIZE = 1
 
 # fonction pour imprimer une matrice
 def printMatrice(matrice, N):
@@ -55,7 +55,7 @@ def produitMatriceConventionnelle(A, B) :
     return C
 
 if expoMatrice1 == expoMatrice2:
-    N = expoMatrice1*2
+    N = expoMatrice1**2
 
     A = [None]*N
     B = [None]*N
@@ -73,20 +73,21 @@ if expoMatrice1 == expoMatrice2:
 
     # multiplication de matrice à l'aide de l'algorithme de strassen
     def strassen(A,B):
-        N = len (A)
-        if N <= int(LEAF_SIZE) : 
+        N = len(A)
+        taille = int(N/2)
+        if N <= LEAF_SIZE : 
             return produitMatriceConventionnelle(A,B)
         else : 
             # division de la matrice en 4 sous-matrices
-            taille = N//2
-            A11 = [[0 for x in range(taille)] for y in range(taille)]
-            A12 = [[0 for x in range(taille)] for y in range(taille)]
-            A21 = [[0 for x in range(taille)] for y in range(taille)]
-            A22 = [[0 for x in range(taille)] for y in range(taille)]
-            B11 = [[0 for x in range(taille)] for y in range(taille)]
-            B12 = [[0 for x in range(taille)] for y in range(taille)]
-            B21 = [[0 for x in range(taille)] for y in range(taille)]
-            B22 = [[0 for x in range(taille)] for y in range(taille)]
+            taille = int(N/2)
+            A11 = [[0 for x in range(0,taille)] for y in range(0,taille)]
+            A12 = [[0 for x in range(0,taille)] for y in range(0,taille)]
+            A21 = [[0 for x in range(0,taille)] for y in range(0,taille)]
+            A22 = [[0 for x in range(0,taille)] for y in range(0,taille)]
+            B11 = [[0 for x in range(0,taille)] for y in range(0,taille)]
+            B12 = [[0 for x in range(0,taille)] for y in range(0,taille)]
+            B21 = [[0 for x in range(0,taille)] for y in range(0,taille)]
+            B22 = [[0 for x in range(0,taille)] for y in range(0,taille)]
 
             for i in range(0,taille):
                 for j in range(0,taille):
@@ -100,8 +101,8 @@ if expoMatrice1 == expoMatrice2:
                     B21[i][j] = B[i + taille][j] #bas à droite 
                     B22[i][j] = B[i + taille][j + taille] #bas à gauche
             
-            aResultatMatrice = [[0 for x in range (taille)] for y in range(taille)]
-            bResultatMatrice = [[0 for x in range (taille)] for y in range(taille)]
+            aResultatMatrice = [[0 for x in range (0,taille)] for y in range(0,taille)]
+            bResultatMatrice = [[0 for x in range (0,taille)] for y in range(0,taille)]
 
             #Calculs des différentes multiplications M
             aResultatMatrice = additionConventionnelle(A11,A22)

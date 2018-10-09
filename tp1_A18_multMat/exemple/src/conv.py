@@ -15,6 +15,15 @@ def printMatrice(matrice, N):
         for j in range(N):
             line += str(matrice[i][j]) + '\t'
         print(line)
+        
+def produitMatriceConventionnelle(A, B) :
+    taille = len(A)
+    C = [[0 for x in range(taille)] for y in range(taille)]
+    for i in range(taille):
+        for j in range(taille):
+            for k in range(taille):
+                C[i][j] += int(A[i][k]) * int(B[k][j])
+    return C
 
 fichier1 = open(fileName1, 'r')
 fichier2 = open(fileName2, 'r')
@@ -22,7 +31,7 @@ fichier2 = open(fileName2, 'r')
 expoMatrice1 = int(fichier1.readline())
 expoMatrice2 = int(fichier2.readline())
 if expoMatrice1 == expoMatrice2:
-    N = expoMatrice1*2
+    N = expoMatrice1**2
 
     matrice1 = [None]*N
     matrice2 = [None]*N
@@ -38,14 +47,7 @@ if expoMatrice1 == expoMatrice2:
     ## Debut Algo Conventionnel
     #
     start_time = time.time()
-
-    result = [[0 for x in range(N)] for y in range(N)]
-
-    for i in range(N):
-        for j in range(N):
-            for k in range(N):
-                result[i][j] += int(matrice1[i][k]) * int(matrice2[k][j])
-
+    result = produitMatriceConventionnelle(matrice1,matrice2)
     end_time = time.time()
 
     if '-all' in options:  # On imprime la matrice résultat
