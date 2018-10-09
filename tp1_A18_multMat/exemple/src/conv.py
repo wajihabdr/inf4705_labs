@@ -31,7 +31,7 @@ fichier2 = open(fileName2, 'r')
 expoMatrice1 = int(fichier1.readline())
 expoMatrice2 = int(fichier2.readline())
 if expoMatrice1 == expoMatrice2:
-    N = expoMatrice1**2
+    N = 2**expoMatrice1
 
     matrice1 = [None]*N
     matrice2 = [None]*N
