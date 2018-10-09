@@ -16,7 +16,7 @@ expoMatrice2 = int(fichier2.readline())
 
 # LEAF_SIZE : taille à partir de laquelle on arrête de faire une multiplication à l'aide de  
 # l'algorithme de strassen pour en faire une avec l'algo conventionnel
-LEAF_SIZE = 2
+LEAF_SIZE = 20
 
 # fonction pour imprimer une matrice
 def printMatrice(matrice, N):
