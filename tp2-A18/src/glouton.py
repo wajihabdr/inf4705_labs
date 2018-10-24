@@ -19,14 +19,44 @@ import time
 # A besoin de path du fichier
 
 nomFichier1 = str(sys.argv[1])
-nomFichier2 = str(sys.argv[2])
 options = sys.argv[3:]
 
 fichier1 = open(nomFichier1, 'r')
-fichier2 = open(nomFichier2, 'r')
+N = int(fichier1.readline());
+P = int(fichier1.readlines()[-1])
 
-capacity=10
-num_of_items=6
+pi = [None]*N;
+poidsTotal = 0
+
+#Tableeau des valeurs et de leur poids respectifs
+for i in range(1,N):
+        line1 = fichier1.readline().replace('\t\n', '')
+        pi[i] = line1.split('\t')
+        print(pi[i])
+
+#Initialisation du sac a dos et du tableau contenant les items a garder
+B = [[0]*(P+1)for i in range(N)]
+resultat = [[0]*(P+1)for i in range(N)]
+
+#mettre dans le table pi plutot la deuxieme partie de chaque ligne pour avoir une table à 1 dimension
+#Algo du sac à dos
+for i in range(N) :
+    for j in range(P) :
+        if(j>=pi[i]):
+            p1=B[i-1][w]
+            p2=B[i-1][j-pi[i]]+item_value[k]
+            if(p1>p2):
+                resultat[i][j]=0
+                B[i][j]=p1
+            else:
+                resultat[i][j]=1
+                B[i][j]=p2
+        else:
+            B[i][j]= B[i-1][j]
+            resultat[i][j]=0
+
+capacity=10 #derniere ligne du fichier
+num_of_items=6 #premiere ligne du fichier
 total_weight=0
 total_value=0
 
@@ -77,8 +107,12 @@ print ('Maximized Value of goods: ')
 print(valueofgoods) 
 print ('Goods to choose: ')
 print(items_to_take)
-options = sys.argv[2:]
-if '-p' in options: # On imprime la solution
+
+if '-all' in options:  # On imprime la matrice résultat
+    print("Resultat algo sac à dos")
+if '-p' in options:  # On imprime la matrice résultat
     print("84 73 12 44 98 75") # Données bidon, mais output du bon format demandé
-if '-t' in options: # On imprime le temps d'exécution
-    print("4.1347628746") # Données bidon, mais output du bon format demandé
+if '-t' in options:  # On imprime le temps d'exécution
+    interval = end_time - start_time
+    print(interval)
+    #print('\n' + 'Temps d execution :' + str(interval) + ' sec')
