@@ -2,6 +2,15 @@ import sys
 
 ex_path = sys.argv[1] # Path de l'exemplaire
 
+# Lecture du fichier source
+fichier = open(ex_path,'r')
+taille = int(fichier.readline())
+batons = []
+for i in range(taille):
+    ligne = fichier.readline().replace('\t\n', '')
+    batons.append(ligne.split('\t'))
+poidTotal = int(fichier.readline())
+
 # TODO: Algo ici
 
 options = sys.argv[2:]
