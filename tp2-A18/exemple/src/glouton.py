@@ -8,10 +8,9 @@ taille = int(fichier.readline())
 batons = []
 for i in range(taille):
     ligne = fichier.readline().replace('\t\n', '')
-    batons.append(ligne.split('\t'))
+    data = ligne.split('\t')
+    batons.append(int(data[1]))
 poidTotal = int(fichier.readline())
-
-# TODO: Algo ici
 
 options = sys.argv[2:]
 if '-p' in options: # On imprime la solution
