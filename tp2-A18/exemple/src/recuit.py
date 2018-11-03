@@ -1,5 +1,6 @@
 import sys
 import time
+import random
 
 ex_path = sys.argv[1] # Path de l'exemplaire
 options = sys.argv[2:]
@@ -31,8 +32,22 @@ def glouton(batons, poidsMax,taille):
         i += 1
     return resultat
 
-def recruit(S0,kmax, P, alpha):
+def gloutonSolutionVoisine(resultat):
+    resultat.ap
+# t = temperature et doit permettre au debut d'avoir plus de probabilite de prendre le mavaise solution
+#teta doit être inferieur à 1 et donc comme chaque fois on multiplie ca par le temperature
+# à chaque itératio de l'algo la propabilité de prendre la mauvaise solution doit diminuer
+#unif est la probabilite
+def recruit(S0, T, kmax, P, alpha):
+    S = S0
+    sMeilleur = S
+    tetaUn = T
+    for i in (1, kmax):
+        for j in (1,P):
+            
 
+        
+    return sMeilleur
 
 S0 = glouton(batons,poidTotal,taille)
 options = sys.argv[2:]
