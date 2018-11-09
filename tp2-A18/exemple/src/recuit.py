@@ -17,23 +17,37 @@ poidTotal = int(fichier.readline())
 
 # TODO: Algo ici
 def glouton(batons, poidsMax,taille):
+    poidsTries = sorted(batons, reverse = True)
     resultat = []
     poids = 0
     i = 1
-    if batons[0] < poidsMax :
-        resultat.append(batons[0])
-        poids += batons[0]
+    if poidsTries[0] < poidsMax :
+        resultat.append(poidsTries[0])
+        poids += poidsTries[0]
     while i <= taille-1:
-        if poids + batons[i] <= poidsMax :
-            resultat.append(batons[i])
-            poids += batons[i]    
+        if poids + poidsTries[i] <= poidsMax :
+            resultat.append(poidsTries[i])
+            poids += poidsTries[i]    
         elif poids == poidsMax :
             break
         i += 1
     return resultat
 
 def gloutonSolutionVoisine(resultat):
-    resultat.ap
+    S = []
+    S = resultat
+    solution = sorted(batons, reverse = True)
+    solutionVoisine = []
+    #ici j'essaye de mettre le reste des poids du fichier dans le tableau 
+    for i in len(resultat):
+        for j in taille:
+            if solution[j] == S[i]:
+                solution.remove(solution[j])
+            else:
+                solutionVoisine.append(solution[j])
+    return solutionVoisine
+            
+    S.append(random.randint(1,))
 # t = temperature et doit permettre au debut d'avoir plus de probabilite de prendre le mavaise solution
 #teta doit être inferieur à 1 et donc comme chaque fois on multiplie ca par le temperature
 # à chaque itératio de l'algo la propabilité de prendre la mauvaise solution doit diminuer
