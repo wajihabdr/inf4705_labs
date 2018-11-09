@@ -45,9 +45,9 @@ def gloutonSolutionVoisine(resultat):
                 solution.remove(solution[j])
             else:
                 solutionVoisine.append(solution[j])
-    return solutionVoisine
-            
-    S.append(random.randint(1,))
+    uneSolution =  S.append(random.randint(1, (len(solutionVoisine)+1)))
+    return uneSolution        
+   
 # t = temperature et doit permettre au debut d'avoir plus de probabilite de prendre le mavaise solution
 #teta doit être inferieur à 1 et donc comme chaque fois on multiplie ca par le temperature
 # à chaque itératio de l'algo la propabilité de prendre la mauvaise solution doit diminuer
