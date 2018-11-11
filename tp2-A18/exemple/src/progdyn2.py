@@ -17,14 +17,9 @@ for i in range(n):
 poidTotal = int(fichier.readline())
 
 # -------------------------------------------------------------
-
-# -------------------------------------------------------------
-
-
 def progdyn2(batons, N):
     n = len(batons)
     c = [[0 for x in range(N+1)] for x in range(n)]
-
 
     c[0][0] = True
     for j in range(1, N+1):
@@ -46,23 +41,20 @@ def progdyn2(batons, N):
     j = N
     i = n-1
     while j > 0:
-        
+
         while i > 0 and c[i-1][j] == True:
             i -= 1
-        #print(str(i) + "__" + str(j))
         j = j - batons[i]
         if j >= 0:
             solution.append(batons[i])
         i -= 1
 
-    #for x in range(n):
-    #    print(c[x])
-    return sorted(solution, reverse = True)
+    return solution
 # -------------------------------------------------------------
 
 
 start_time = time.time()
-result = progdyn2(batons, poidTotal)
+result = progdyn2(sorted(batons), poidTotal)
 end_time = time.time()
 
 options = sys.argv[2:]
