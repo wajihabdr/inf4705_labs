@@ -20,10 +20,9 @@ poidTotal = int(fichier.readline())
 
 # -------------------------------------------------------------
 
-
 def progdyn1(batons, poidTotal):
     c = [math.inf for x in range(poidTotal+1)]
-    I = [None for x in range(poidTotal+1)]
+    I = [0 for x in range(poidTotal+1)]
 
     for i in range(len(batons)):
         c[batons[i]] = 1
@@ -31,7 +30,7 @@ def progdyn1(batons, poidTotal):
 
     for j in range(poidTotal+1):
         if c[j] != 1:
-            for i in range(int(j/2)):
+            for i in range(math.floor(j/2)):
                 if c[j] > c[i] + c[j-i]:
                     c[j] = c[i] + c[j-i]
                     I[j] = i
