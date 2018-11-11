@@ -19,7 +19,7 @@ def glouton(batons, poidsMax,taille):
     resultat = []
     poids = 0
     i = 1
-    if poidsTries[0] < poidsMax :
+    if poidsTries[0] <= poidsMax :
         resultat.append(poidsTries[0])
         poids += poidsTries[0]
     while i <= taille-1:
