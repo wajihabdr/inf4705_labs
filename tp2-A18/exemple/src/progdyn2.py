@@ -57,7 +57,6 @@ start_time = time.time()
 result = progdyn2(sorted(batons), poidTotal)
 end_time = time.time()
 
-options = sys.argv[2:]
 if '-p' in options:  # On imprime la solution
     print(result)
 if '-t' in options:  # On imprime le temps d'exécution

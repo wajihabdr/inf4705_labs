@@ -17,14 +17,20 @@ for i in range(n):
 poidTotal = int(fichier.readline())
 
 # -------------------------------------------------------------
-
+def genSolution(c, I, poidsMax, solution):
+    if I[poidsMax] < 0:
+        solution.append(poidsMax)
+    else:
+        solution = genSolution(c, I, I[poidsMax], solution)
+        solution = genSolution(c, I, poidsMax - I[poidsMax], solution)
+    return solution
 # -------------------------------------------------------------
-
 def progdyn1(batons, poidTotal):
+    n = len(batons)
     c = [math.inf for x in range(poidTotal+1)]
     I = [0 for x in range(poidTotal+1)]
 
-    for i in range(len(batons)):
+    for i in range(n):
         c[batons[i]] = 1
         I[batons[i]] = -i
 
@@ -35,17 +41,14 @@ def progdyn1(batons, poidTotal):
                     c[j] = c[i] + c[j-i]
                     I[j] = i
 
-    print(c)
-    print(I)
-    return []
+    solution = []
+    return genSolution(c, I, poidTotal, solution)
 # -------------------------------------------------------------
-
 
 start_time = time.time()
 result = progdyn1(batons, poidTotal)
 end_time = time.time()
 
-options = sys.argv[2:]
 if '-p' in options:  # On imprime la solution
     print(result)
 if '-t' in options:  # On imprime le temps d'exécution
