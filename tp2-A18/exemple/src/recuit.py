@@ -35,36 +35,25 @@ def glouton(batons, poidsMax,taille):
     return resultat
 
 def gloutonSolutionVoisine(resultat):
-    S = []
-    S = resultat
-    # taille_ = taille
     solution = sorted(batons, reverse = True)
     print ("sorted : ", solution)
     solutionVoisine = []
     uneSolution = []
-    #ici j'essaye de mettre le reste des poids du fichier dans le tableau 
-    for i in range(len(resultat)):
-        for j in range(i,taille):
-            print("i :", i, S[i], "j :",j, solution[j])
-            if S[i] == solution[j]:
-                print("remove")
-               # S.remove(S[i])
-               # solution.remove(solution[j])
-                break
-            else:
-                print("append")
-                solutionVoisine.append(solution[j])
+    for i in range(len(resultat), len(solution)):
+        solutionVoisine.append(solution[i])
     print("solution", solutionVoisine)
+
     poids = 0
     for k in range(len(solutionVoisine)):
-        uneSolution.append(solutionVoisine[random.randint(0, (len(solutionVoisine)))])
+        valeurRandom = random.randint(0, (len(solutionVoisine)-1))
+        uneSolution.append(solutionVoisine[valeurRandom])
         poids += uneSolution[k]
         if poids > poidTotal : break
 
     while poids > poidTotal:
-        valeur = random.randint(0,len(uneSolution))
-        uneSolution.remove(uneSolution[valeur])
-        poids -= uneSolution[valeur]
+        index = random.randint(0,len(uneSolution)-1)
+        uneSolution.remove(uneSolution[index])
+        poids -= uneSolution[index]
     return uneSolution        
    
 def somme(tableau):
