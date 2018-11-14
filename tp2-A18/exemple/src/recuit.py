@@ -86,7 +86,6 @@ start_time = time.time()
 recuit = recuit(S0,100,10,8,0.9)
 end_time = time.time()
 
-print(recuit)
 options = sys.argv[2:]
 if '-p' in options: # On imprime la solution
     print(recuit)
