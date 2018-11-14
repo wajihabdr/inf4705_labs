@@ -40,4 +40,14 @@ if '-p' in options:
 if '-t' in options:  # On imprime le temps d'exécution
     interval = end_time - start_time
     print(interval)
+
     #print('\n' + 'Temps d execution :' + str(interval) + ' sec')
+if '-test' in options:
+    interval = end_time - start_time
+    temps = str(interval).replace('.', ',')
+
+    diffPoids = poidTotal
+    for i in range(len(result)):
+        diffPoids -= result[i]
+
+    print(temps + ';' + str(diffPoids))

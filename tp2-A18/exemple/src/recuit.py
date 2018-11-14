@@ -83,14 +83,30 @@ def recuit(S0, T, kmax, P, alpha):
 S0 = glouton(batons,poidTotal,taille)
 
 start_time = time.time()
+<<<<<<< HEAD
 recuit = recuit(S0,100,10,10,0.6) #recuit(S0, T, kmax, P, alpha)
+=======
+result = recuit(S0,100,10,8,0.9)
+>>>>>>> c9811e5b87489152972900da9e53432266085016
 end_time = time.time()
 
 options = sys.argv[2:]
 if '-p' in options: # On imprime la solution
-    print(recuit)
+    print(result)
 if '-t' in options: # On imprime le temps d'exécution
     interval = end_time - start_time
     print(interval)
+<<<<<<< HEAD
     somme = somme(recuit)
     print(somme)
+=======
+if '-test' in options:
+    interval = end_time - start_time
+    temps = str(interval).replace('.', ',')
+
+    diffPoids = poidTotal
+    for i in range(len(result)):
+        diffPoids -= result[i]
+
+    print(temps + ';' + str(diffPoids))
+>>>>>>> c9811e5b87489152972900da9e53432266085016

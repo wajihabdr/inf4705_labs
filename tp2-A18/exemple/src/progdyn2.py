@@ -60,3 +60,12 @@ if '-p' in options:  # On imprime la solution
 if '-t' in options:  # On imprime le temps d'exécution
     interval = end_time - start_time
     print(interval)
+if '-test' in options:
+    interval = end_time - start_time
+    temps = str(interval).replace('.', ',')
+
+    diffPoids = poidTotal
+    for i in range(len(result)):
+        diffPoids -= result[i]
+
+    print(temps + ';' + str(diffPoids))
