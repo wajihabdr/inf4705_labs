@@ -18,7 +18,7 @@ poidTotal = int(fichier.readline())
 
 # -------------------------------------------------------------
 def genSolution(c, I, poidsMax, solution):
-    if I[poidsMax] < 0:
+    if I[poidsMax] < 1:
         solution.append(poidsMax)
     else:
         solution = genSolution(c, I, I[poidsMax], solution)

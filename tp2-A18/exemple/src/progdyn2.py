@@ -15,7 +15,6 @@ for i in range(n):
     data = ligne.split('\t')
     batons.append(int(data[1]))
 poidTotal = int(fichier.readline())
-
 # -------------------------------------------------------------
 def progdyn2(batons, N):
     n = len(batons)
@@ -51,7 +50,6 @@ def progdyn2(batons, N):
 
     return solution
 # -------------------------------------------------------------
-
 
 start_time = time.time()
 result = progdyn2(sorted(batons), poidTotal)
