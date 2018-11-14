@@ -83,7 +83,7 @@ def recuit(S0, T, kmax, P, alpha):
 S0 = glouton(batons,poidTotal,taille)
 
 start_time = time.time()
-recuit = recuit(S0,100,10,10,0.9)
+recuit = recuit(S0,100,10,8,0.9)
 end_time = time.time()
 
 print(recuit)
