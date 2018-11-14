@@ -50,8 +50,8 @@ def gloutonSolutionVoisine(resultat):
 
     while poids > poidTotal:
         index = random.randint(0,len(uneSolution)-1)
-        uneSolution.remove(uneSolution[index])
         poids -= uneSolution[index]
+        uneSolution.remove(uneSolution[index])
     return uneSolution        
    
 def somme(tableau):
@@ -83,7 +83,7 @@ def recuit(S0, T, kmax, P, alpha):
 S0 = glouton(batons,poidTotal,taille)
 
 start_time = time.time()
-recuit = recuit(S0,100,10,8,0.9)
+recuit = recuit(S0,100,10,10,0.6) #recuit(S0, T, kmax, P, alpha)
 end_time = time.time()
 
 options = sys.argv[2:]
@@ -92,3 +92,5 @@ if '-p' in options: # On imprime la solution
 if '-t' in options: # On imprime le temps d'exécution
     interval = end_time - start_time
     print(interval)
+    somme = somme(recuit)
+    print(somme)
