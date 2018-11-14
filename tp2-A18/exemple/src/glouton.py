@@ -35,8 +35,8 @@ start_time = time.time()
 result = glouton(batons,poidTotal,taille)
 end_time = time.time()
     
-if '-p' in options:  # On imprime la matrice résultat
-    print(result) # Données bidon, mais output du bon format demandé
+if '-p' in options:
+    print(result) 
 if '-t' in options:  # On imprime le temps d'exécution
     interval = end_time - start_time
     print(interval)

@@ -36,12 +36,10 @@ def glouton(batons, poidsMax,taille):
 
 def gloutonSolutionVoisine(resultat):
     solution = sorted(batons, reverse = True)
-    print ("sorted : ", solution)
     solutionVoisine = []
     uneSolution = []
     for i in range(len(resultat), len(solution)):
         solutionVoisine.append(solution[i])
-    print("solution", solutionVoisine)
 
     poids = 0
     for k in range(len(solutionVoisine)):
@@ -83,10 +81,15 @@ def recuit(S0, T, kmax, P, alpha):
     return sMeilleur
 
 S0 = glouton(batons,poidTotal,taille)
-print("glouton : ", S0)
-recuit = recuit(S0,100,12,5,0.5)
+
+start_time = time.time()
+recuit = recuit(S0,100,10,10,0.9)
+end_time = time.time()
+
+print(recuit)
 options = sys.argv[2:]
 if '-p' in options: # On imprime la solution
-    print("84 73 12 44 98 75") # Données bidon, mais output du bon format demandé
+    print(recuit)
 if '-t' in options: # On imprime le temps d'exécution
-    print("4.1347628746") # Données bidon, mais output du bon format demandé
+    interval = end_time - start_time
+    print(interval)
