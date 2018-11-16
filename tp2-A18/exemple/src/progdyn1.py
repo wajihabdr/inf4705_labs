@@ -10,14 +10,14 @@ fichier = open(ex_path, 'r')
 n = int(fichier.readline())
 batons = []
 
-for i in range(n):
+for i in range(n): #O(n)
     ligne = fichier.readline().replace('\t\n', '')
     data = ligne.split('\t')
     batons.append(int(data[1]))
 poidTotal = int(fichier.readline())
 
 # -------------------------------------------------------------
-def genSolution(c, I, poidsMax, solution):
+def genSolution(c, I, poidsMax, solution): #O(2^poidsMax)
     if I[poidsMax] < 1:
         solution.append(poidsMax)
     else:
@@ -25,16 +25,16 @@ def genSolution(c, I, poidsMax, solution):
         solution = genSolution(c, I, poidsMax - I[poidsMax], solution)
     return solution
 # -------------------------------------------------------------
-def progdyn1(batons, poidTotal):
+def progdyn1(batons, poidTotal): #O(((poidTotal+1)^2)/2)
     n = len(batons)
     c = [math.inf for x in range(poidTotal+1)]
     I = [0 for x in range(poidTotal+1)]
 
-    for i in range(n):
+    for i in range(n): #O(len(batons))
         c[batons[i]] = 1
         I[batons[i]] = -i
 
-    for j in range(poidTotal+1):
+    for j in range(poidTotal+1): #O(((poidTotal+1)^2)/2)
         if c[j] != 1:
             for i in range(math.floor(j/2)):
                 if c[j] > c[i] + c[j-i]:
@@ -42,11 +42,11 @@ def progdyn1(batons, poidTotal):
                     I[j] = i
 
     solution = []
-    return genSolution(c, I, poidTotal, solution)
+    return genSolution(c, I, poidTotal, solution) #O(2^poidsTotal)
 # -------------------------------------------------------------
 
 start_time = time.time()
-result = progdyn1(batons, poidTotal)
+result = progdyn1(batons, poidTotal) #O(2^poidsTotal)
 end_time = time.time()
 
 if '-p' in options:  # On imprime la solution

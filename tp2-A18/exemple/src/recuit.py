@@ -10,14 +10,14 @@ options = sys.argv[2:]
 fichier = open(ex_path,'r')
 taille = int(fichier.readline())
 batons = []
-for i in range(taille):
+for i in range(taille): #O(n)
     ligne = fichier.readline().replace('\t\n', '')
     data = ligne.split('\t')
     batons.append(int(data[1]))
 poidTotal = int(fichier.readline())
 
 # TODO: Algo ici
-def glouton(batons, poidsMax,taille):
+def glouton(batons, poidsMax,taille): #O(taillelogtaille)
     poidsTries = sorted(batons, reverse = True)
     resultat = []
     poids = 0
@@ -34,27 +34,27 @@ def glouton(batons, poidsMax,taille):
         i += 1
     return resultat
 
-def gloutonSolutionVoisine(resultat):
-    solution = sorted(batons, reverse = True)
-    solutionVoisine = []
-    uneSolution = []
-    for i in range(len(resultat), len(solution)):
-        solutionVoisine.append(solution[i])
+def gloutonSolutionVoisine(resultat): #O(taillelogtaille)
+    solution = sorted(batons, reverse = True) #O(taillelogtaille)
+    solutionVoisine = [] #O(1)
+    uneSolution = [] #O(1)
+    for i in range(len(resultat), len(solution)): 
+        solutionVoisine.append(solution[i]) #O(taille)
 
     poids = 0
-    for k in range(len(solutionVoisine)):
+    for k in range(len(solutionVoisine)): #O(log len(solutionVoisine) )
         valeurRandom = random.randint(0, (len(solutionVoisine)-1))
         uneSolution.append(solutionVoisine[valeurRandom])
         poids += uneSolution[k]
         if poids > poidTotal : break
 
-    while poids > poidTotal:
+    while poids > poidTotal: #O(nlogn)
         index = random.randint(0,len(uneSolution)-1)
         poids -= uneSolution[index]
-        uneSolution.remove(uneSolution[index])
+        uneSolution.remove(uneSolution[index]) #O(n)
     return uneSolution        
    
-def somme(tableau):
+def somme(tableau): #O(len(tableau))
     somme = 0
     for i in range(len(tableau)):
         somme += tableau[i]
@@ -63,17 +63,17 @@ def somme(tableau):
 #teta doit être inferieur à 1 et donc comme chaque fois on multiplie ca par le temperature
 # à chaque itératio de l'algo la propabilité de prendre la mauvaise solution doit diminuer
 #unif est la probabilite
-def recuit(S0, T, kmax, P, alpha):
-    S = S0
-    sMeilleur = S
-    teta = T
+def recuit(S0, T, kmax, P, alpha): #O(kmax*taillelogtaille)
+    S = S0 #O(1)
+    sMeilleur = S #O(1)
+    teta = T #O(1)
     sPrime = []
-    for k in (1, kmax):
-        for j in (1,P):
-            sPrime = gloutonSolutionVoisine(S)
-            delta = somme(sPrime) - somme(S)
+    for k in (1, kmax): #O(kmax)
+        for j in (1,P): #O(P)
+            sPrime = gloutonSolutionVoisine(S) #O(taillelogtaille)
+            delta = somme(sPrime) - somme(S) #O(S) ou #O(sPrime)
             valeur = math.exp(delta/(teta*k))
-            if delta >= 0 or (valeur >=0 and valeur <=1):
+            if delta >= 0 or (valeur >=0 and valeur <=1): #O(S) ou #O(sPrime)
                 S = sPrime
                 if somme(S) > somme(sMeilleur):
                     sMeilleur = S
@@ -83,7 +83,7 @@ def recuit(S0, T, kmax, P, alpha):
 S0 = glouton(batons,poidTotal,taille)
 
 start_time = time.time()
-recuit = recuit(S0,100,10,10,0.6) #recuit(S0, T, kmax, P, alpha)
+recuit = recuit(S0,100,10,10,0.6) #recuit(S0, T, kmax, P, alpha)  #O(n*kmax*taillelogtaille)
 end_time = time.time()
 
 options = sys.argv[2:]

@@ -14,15 +14,15 @@ for i in range(taille):
     batons.append(int(data[1]))
 poidTotal = int(fichier.readline())
 
-def glouton(batons, poidsMax,taille):
-    poidsTries = sorted(batons, reverse = True)
+def glouton(batons, poidsMax,taille): #O(taillelogtaille)
+    poidsTries = sorted(batons, reverse = True) #O(taillelogtaille)
     resultat = []
     poids = 0
     i = 1
     if poidsTries[0] <= poidsMax :
         resultat.append(poidsTries[0])
         poids += poidsTries[0]
-    while i <= taille-1:
+    while i <= taille-1: #O(logtaille)
         if poids + poidsTries[i] <= poidsMax :
             resultat.append(poidsTries[i])
             poids += poidsTries[i]    
