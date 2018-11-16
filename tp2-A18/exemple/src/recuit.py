@@ -59,10 +59,7 @@ def somme(tableau): #O(len(tableau))
     for i in range(len(tableau)):
         somme += tableau[i]
     return somme
-# t = temperature et doit permettre au debut d'avoir plus de probabilite de prendre le mavaise solution
-#teta doit être inferieur à 1 et donc comme chaque fois on multiplie ca par le temperature
-# à chaque itératio de l'algo la propabilité de prendre la mauvaise solution doit diminuer
-#unif est la probabilite
+
 def recuit(S0, T, kmax, P, alpha): #O(kmax*taillelogtaille)
     S = S0 #O(1)
     sMeilleur = S #O(1)
@@ -83,7 +80,7 @@ def recuit(S0, T, kmax, P, alpha): #O(kmax*taillelogtaille)
 S0 = glouton(batons,poidTotal,taille)
 
 start_time = time.time()
-recuit = recuit(S0,100,10,10,0.6) #recuit(S0, T, kmax, P, alpha)  #O(n*kmax*taillelogtaille)
+recuit = recuit(S0,100,10,10,0.6)  #O(kmax*taillelogtaille)
 end_time = time.time()
 
 options = sys.argv[2:]
