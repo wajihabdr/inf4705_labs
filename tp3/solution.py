@@ -7,24 +7,31 @@ options = sys.argv[2:]
 # Lecture du fichier source
 fichier = open(nomFichier,'r')
 nCentreInterets = int(fichier.readline())
-matriceAdjacente = [None]*nCentreInterets
-niveauAppreciation = []
+matriceAdjacente = [None] *nCentreInterets
+niveauAppreciation = [None]*nCentreInterets
 
 for i in range(nCentreInterets):
-    line1 = fichier.readline().replace('\t\n', '')
-    matriceAdjacente[i] = line1.split('\t')
+    line1 = fichier.readline().replace(' \n', '')
+    matriceAdjacente[i] = line1.split(' ')
 
-temps = int(fichier.readline())
+tempsMax = int(fichier.readline())
 
-for i in range(nCentreInterets):
-    niveauAppreciation.append(fichier.readline().split('\t'))
-   # niveauAppreciation[i] = line.split('\t')
+niveauAppreciation = fichier.readline().replace(' \n', '').split(' ')
 
-def printMatrice(matrice, N):
+def printMatrice(matrice):
+    N = len(matrice)
     for i in range(N):
         line = ''
         for j in range(N):
-            line += str(matrice[i][j]) + '\t'
+            line += matrice[i][j] + '\t'
         print(line)
-print(niveauAppreciation)
-#printMatrice(matriceAdjacente,nCentreInterets)
+
+if '-test' in options:
+    print(nCentreInterets)
+    print()
+    printMatrice(matriceAdjacente)
+    print()
+    print(tempsMax)
+    print()
+    print(niveauAppreciation)
+    print()
