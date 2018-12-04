@@ -18,6 +18,16 @@ tempsMax = int(fichier.readline())
 
 niveauAppreciation = fichier.readline().replace(' \n', '').split(' ')
 
+def genererArretes(graphe) :
+    arretes = []
+    N = len(graphe)
+    for noeud in range(N):
+        M = len(graphe[noeud])
+        for voisin in range(M):
+            arretes.append((noeud,voisin))
+    return arretes
+        
+
 def printMatrice(matrice):
     N = len(matrice)
     for i in range(N):
@@ -35,3 +45,4 @@ if '-test' in options:
     print()
     print(niveauAppreciation)
     print()
+    print(genererArretes(matriceAdjacente))
