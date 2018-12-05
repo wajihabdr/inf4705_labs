@@ -117,7 +117,7 @@ def parcoursGraphe():
         parcours = graph.meilleurChemin(parcours, tabNoeuds, tempsMax)
         if '-p' in options:
             parcours.printParcours()
-        time.sleep(2)
+        time.sleep(1)
 
 thread = threading.Thread(target=parcoursGraphe, args=())
 e = threading.Event()
