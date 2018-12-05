@@ -102,6 +102,8 @@ for noeud in range(N):
 
 # Debut Algo
 parcours = Parcours()
+print("Temps parcouru : " + str(parcours.getTempsParcouru()))
+print(parcours.getNoeuds())
 
 for index in range(22):
     parcours = graph.meilleurChemin(parcours, tabNoeuds, tempsMax)
