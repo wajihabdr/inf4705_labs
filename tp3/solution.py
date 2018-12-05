@@ -106,7 +106,6 @@ for noeud in range(N):
 
 # Debut Algo
 parcours = Parcours()
-parcours.printParcours()
 loop = True
 
 #Code pour le thread source : https://stackoverflow.com/questions/11758555/python-do-something-until-keypress-or-timeout
