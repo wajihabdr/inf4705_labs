@@ -20,11 +20,6 @@ tempsMax = int(fichier.readline())
 niveauAppreciation = fichier.readline().replace(' \n', '').split(' ')
 
 #Algo Dijkstra
-inf = float(tempsMax)
-Arrete = namedtuple('Arrete', 'depart, arrivee, temps')
-
-def genererArretes(depart, arrivee, temps) :
-    return Arrete(depart, arrivee, temps)
 
 class Graph :
     def __init__(self, noeuds = []):
