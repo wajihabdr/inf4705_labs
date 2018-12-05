@@ -69,14 +69,13 @@ class Graph:
         cheminSelection = 0
         for i in range(len(tabNoeuds)):
             arrivee = tabNoeuds[i]
-            if (Parcours.getTempsParcouru() + self.temps[(depart, arrivee)] + self.temps[(arrivee, 0)]) < tempsMax:
+            if (Parcours.getTempsParcouru() + self.temps[(depart, arrivee)] + self.temps[(arrivee, 0)]) <= tempsMax:
                 if self.ratio[(depart, cheminSelection)] < self.ratio[(depart, arrivee)]:
                     cheminSelection = arrivee
-            else:
-                print('END !!')
 
-        tabNoeuds.remove(cheminSelection)
-        parcours.ajouterNoeud(cheminSelection, self.temps[(depart, cheminSelection)])
+        if cheminSelection in tabNoeuds:
+            tabNoeuds.remove(cheminSelection)
+            parcours.ajouterNoeud(cheminSelection, self.temps[(depart, cheminSelection)])
         return parcours
 
     def getAppreciation(self, noeud):
@@ -103,9 +102,8 @@ for noeud in range(N):
 
 # Debut Algo
 parcours = Parcours()
-tabNoeuds.remove(0)
 
-for index in range(20):
+for index in range(22):
     parcours = graph.meilleurChemin(parcours, tabNoeuds, tempsMax)
     print("Temps parcouru : " + str(parcours.getTempsParcouru()))
     print(parcours.getNoeuds())
