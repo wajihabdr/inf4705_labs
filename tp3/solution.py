@@ -33,7 +33,7 @@ class Graph:
 
     def ajouterArretes(self, depart, arrivee, temps):
         self.arretes[depart].append(arrivee)
-        self.temps[(depart, arrivee)] = temps
+        self.temps[(depart, arrivee)] = int(temps)
         self.ratio[(depart, arrivee)] = self.safe_div(int(niveauAppreciation[arrivee]), int(temps))
 
     def printGraph(self):
@@ -43,6 +43,23 @@ class Graph:
         if y == 0:
             return 0
         return x / y
+
+    def meilleurChemin(self, parcours, tabNoeuds, tempsMax):
+        tempsParcouru = sum(parcours)
+        depart = parcours[len(parcours)-1]
+        print("somme list : " + str(tempsParcouru))
+
+        cheminSelection = 0
+        for i in range(len(tabNoeuds)):
+            arrivee = tabNoeuds[i]
+            if (tempsParcouru + self.temps[(depart, arrivee)] + self.temps[(arrivee, 0)]) < tempsMax:
+                if self.ratio[(depart, cheminSelection)] < self.ratio[(depart, arrivee)]:
+                    cheminSelection = arrivee
+            else:
+                print('END !!')
+
+        tabNoeuds.remove(cheminSelection)
+        return cheminSelection
 
     def getAppreciation(self, noeud):
         return niveauAppreciation[noeud]
@@ -68,13 +85,15 @@ for noeud in range(N):
         graph.ajouterArretes(noeud, voisin, matriceAdjacente[noeud][voisin])
 
 # Debut Algo
-
 parcours = [0]
+tabNoeuds.remove(0)
 
-parcours.append(graph.meilleur)
+for index in range(15):
+    parcours.append(graph.meilleurChemin(parcours, tabNoeuds, tempsMax))
+    print(tabNoeuds)
+    print(parcours)
 
 # End
-
 
 def printMatrice(matrice):
     N = len(matrice)
@@ -83,7 +102,6 @@ def printMatrice(matrice):
         for j in range(N):
             line += matrice[i][j] + '\t'
         print(line)
-
 
 if '-test' in options:
     print(nCentreInterets)
