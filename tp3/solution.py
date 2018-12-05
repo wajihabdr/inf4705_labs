@@ -54,16 +54,10 @@ class Graph:
         self.temps = {}
         self.ratio = {}
 
-    def ajouterNoeud(self, *noeud):
-        [self.noeuds.add(n) for n in noeud]
-
     def ajouterArretes(self, depart, arrivee, temps):
         self.arretes[depart].append(arrivee)
         self.temps[(depart, arrivee)] = int(temps)
         self.ratio[(depart, arrivee)] = self.safe_div(int(niveauAppreciation[arrivee]), int(temps))
-
-    def printGraph(self):
-        print(self.temps)
 
     def safe_div(self, x, y):
         if y == 0:
