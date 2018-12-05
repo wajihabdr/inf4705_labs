@@ -1,5 +1,6 @@
 import sys
 import math
+from collections import deque, namedtuple, defaultdict
 
 nomFichier = sys.argv[1] # Path de l'exemplaire
 options = sys.argv[2:]
@@ -18,15 +19,57 @@ tempsMax = int(fichier.readline())
 
 niveauAppreciation = fichier.readline().replace(' \n', '').split(' ')
 
-def genererArretes(graphe) :
-    arretes = []
-    N = len(graphe)
-    for noeud in range(N):
-        M = len(graphe[noeud])
-        for voisin in range(M):
-            arretes.append((noeud,voisin))
-    return arretes
-        
+#Algo Dijkstra
+inf = float(tempsMax)
+Arrete = namedtuple('Arrete', 'depart, arrivee, temps')
+
+def genererArretes(depart, arrivee, temps) :
+    return Arrete(depart, arrivee, temps)
+
+class Graph :
+    def __init__(self):
+        self.noeuds = set()
+        self.arretes = defaultdict(list)
+        self.temps = {}
+
+    def ajouterNoeud(self, noeud):
+        self.noeuds.add(noeud)
+    
+    def ajouterArretes(self, depart, arrivee, temps):
+        self.arretes[depart].append(arrivee)
+        self.arretes[arrivee].append(depart)
+        self.temps[(depart, arrivee)] = temps
+        self.temps[(arrivee, depart)] = temps
+    
+    def solution(graph, debut):
+        visitees = {debut : 0}
+        chemin = {}
+        noeuds = set(graph.noeuds)
+
+        while noeuds:
+            noeudMinimal = None
+            for noeud in range(noeuds): # integrer le temps max
+                if noeud in visitees:
+                    if noeudMinimal is None:
+                        noeudMinimal = noeud
+                    elif visitees[noeud] < visitees[noeudMinimal]: #ici on cosideres le temps, à changer par ratio temps/appreciation et choisir celui avec le + grd ratio
+                        noeudMinimal = noeud
+            
+            if noeudMinimal is None:
+                break
+            
+            noeuds.remove(noeudMinimal)
+            tempsActuel = visitees[noeudMinimal]
+
+            for arrete in graph.arretes[noeudMinimal]:
+                temps = tempsActuel + graph.temps[(noeudMinimal, arrete)]
+                if arrete not in visitees or temps < tempsMax:
+                    visitees[arrete] = temps
+                    chemin[arrete] = noeudMinimal
+
+        return visitees, chemin
+
+
 
 def printMatrice(matrice):
     N = len(matrice)
@@ -45,4 +88,3 @@ if '-test' in options:
     print()
     print(niveauAppreciation)
     print()
-    print(genererArretes(matriceAdjacente))
