@@ -2,13 +2,13 @@ import sys
 import math
 from collections import deque, namedtuple, defaultdict
 
-nomFichier = sys.argv[1] # Path de l'exemplaire
+nomFichier = sys.argv[1]  # Path de l'exemplaire
 options = sys.argv[2:]
 
 # Lecture du fichier source
-fichier = open(nomFichier,'r')
+fichier = open(nomFichier, 'r')
 nCentreInterets = int(fichier.readline())
-matriceAdjacente = [None] *nCentreInterets
+matriceAdjacente = [None] * nCentreInterets
 niveauAppreciation = [None]*nCentreInterets
 
 for i in range(nCentreInterets):
@@ -19,58 +19,47 @@ tempsMax = int(fichier.readline())
 
 niveauAppreciation = fichier.readline().replace(' \n', '').split(' ')
 
-#Algo Dijkstra
+# Class Graph
 
-class Graph :
-    def __init__(self, noeuds = []):
+class Graph:
+    def __init__(self, noeuds=[]):
         self.noeuds = set()
         self.arretes = defaultdict(list)
         self.temps = {}
+        self.ratio = {}
 
     def ajouterNoeud(self, *noeud):
         [self.noeuds.add(n) for n in noeud]
-    
+
     def ajouterArretes(self, depart, arrivee, temps):
         self.arretes[depart].append(arrivee)
         self.temps[(depart, arrivee)] = temps
-    
+        self.ratio[(depart, arrivee)] = self.safe_div(int(niveauAppreciation[arrivee]), int(temps))
+
     def printGraph(self):
         print(self.temps)
-    
-    def solution(self,graph, debut):
-        visitees = {debut : 0}
-        chemin = {}
-        noeuds = set(graph.noeuds)
-        print(graph.noeuds)
 
-        while noeuds:
-            noeudMinimal = None
-            for noeud in range(noeuds): # integrer le temps max
-                if noeud in visitees:
-                    if noeudMinimal is None:
-                        noeudMinimal = noeud
-                    elif visitees[noeud] < visitees[noeudMinimal]: #ici on consideres le temps, à changer par ratio temps/appreciation et choisir celui avec le + grd ratio
-                        noeudMinimal = noeud
-            
-            if noeudMinimal is None:
-                break
-            
-            noeuds.remove(noeudMinimal)
-            tempsActuel = visitees[noeudMinimal]
+    def safe_div(self, x, y):
+        if y == 0:
+            return 0
+        return x / y
 
-            for arrete in graph.arretes[noeudMinimal]:
-                temps = tempsActuel + graph.temps[(noeudMinimal, arrete)]
-                if arrete not in visitees or temps < tempsMax:
-                    visitees[arrete] = temps
-                    chemin[arrete] = noeudMinimal
+    def getAppreciation(self, noeud):
+        return niveauAppreciation[noeud]
 
-        return visitees, chemin
+    def getTemp(self, depart, arrivee):
+        return self.temps[(depart, arrivee)]
+
+    def getRatio(self, depart, arrivee):
+        return self.ratio[(depart, arrivee)]
+
+# Instanciation de la class graph
 
 tabNoeuds = []
-for item in range(nCentreInterets):
-    tabNoeuds.append(item)
+for i in range(nCentreInterets):
+    tabNoeuds.append(i)
 
-graph = Graph(noeuds = tabNoeuds)
+graph = Graph(noeuds=tabNoeuds)
 
 N = len(matriceAdjacente)
 
@@ -78,8 +67,13 @@ for noeud in range(N):
     for voisin in range(N):
         graph.ajouterArretes(noeud, voisin, matriceAdjacente[noeud][voisin])
 
-# graph.printGraph()
-print(graph.solution(graph,1))
+# Debut Algo
+
+parcours = [0]
+
+parcours.append(graph.meilleur)
+
+# End
 
 
 def printMatrice(matrice):
@@ -89,6 +83,7 @@ def printMatrice(matrice):
         for j in range(N):
             line += matrice[i][j] + '\t'
         print(line)
+
 
 if '-test' in options:
     print(nCentreInterets)
