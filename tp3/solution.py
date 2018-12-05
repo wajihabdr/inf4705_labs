@@ -1,6 +1,9 @@
 import sys
 import math
-from collections import deque, namedtuple, defaultdict
+import atexit   
+import time
+import threading
+from collections import defaultdict
 
 nomFichier = sys.argv[1]  # Path de l'exemplaire
 options = sys.argv[2:]
@@ -105,6 +108,25 @@ for noeud in range(N):
 parcours = Parcours()
 parcours.printParcours()
 loop = True
+
+#Essai avec les threads
+def do_something():
+    T0 = time.clock()
+    while (time.clock() - T0) < 60 and not e.isSet(): 
+        #here do a bunch of stuff
+        time.sleep(5)
+
+thread = threading.Thread(target=do_something, args=())
+e = threading.Event()
+thread.start()
+print ('Press CTRL-C to interrupt')
+while thread.isAlive():
+    try: time.sleep(1) #wait 1 second, then go back and ask if thread is still alive
+    except KeyboardInterrupt: #if ctrl-C is pressed within that second,
+                              #catch the KeyboardInterrupt exception
+        e.set() #set the flag that will kill the thread when it has finished
+        print ('Exiting...')
+        thread.join() #wait for the thread to finish
 
 while loop:
     lastParcours = parcours.getNoeuds().copy()
