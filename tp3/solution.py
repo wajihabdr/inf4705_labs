@@ -33,6 +33,8 @@ class Graph :
     def ajouterArretes(self, depart, arrivee, temps):
         self.arretes[depart].append(arrivee)
         self.temps[(depart, arrivee)] = temps
+    
+    def printGraph(self):
         print(self.temps)
     
 def solution(graph, debut):
@@ -71,6 +73,7 @@ N = len(matriceAdjacente)
 for noeud in range(N):
     for voisin in range(N):
         graph.ajouterArretes(noeud, voisin, matriceAdjacente[noeud][voisin])
+graph.printGraph()
 
           
 
