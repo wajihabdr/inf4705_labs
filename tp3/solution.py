@@ -42,7 +42,8 @@ class Parcours:
         line = ''
         for i in range(len(self.noeuds)):
             line += str(self.noeuds[i]) + '\t'
-        line += '0'
+        if len(self.noeuds) > 1 and self.noeuds[len(self.noeuds)-1] != 0:
+            line += '0'
         print(line)
 
 # Class Graph
@@ -109,19 +110,15 @@ for noeud in range(N):
 # Debut Algo
 parcours = Parcours()
 parcours.printParcours()
+loop = True
 
-for index in range(22):
+while loop:
+    lastParcours = parcours.getNoeuds().copy()
     parcours = graph.meilleurChemin(parcours, tabNoeuds, tempsMax)
-    parcours.printParcours()
 
-# End
-
-if '-test' in options:
-    print(nCentreInterets)
-    print()
-    #printMatrice(matriceAdjacente)
-    print()
-    print(tempsMax)
-    print()
-    print(niveauAppreciation)
-    print()
+    if '-p' in options:
+        parcours.printParcours()
+    else:
+        if lastParcours == parcours.getNoeuds():
+            loop = False
+            parcours.printParcours()
