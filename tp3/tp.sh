@@ -20,4 +20,4 @@ case $key in
 esac
 shift
 done
-solution.py "$EX_PATH" $OPTIONS
+py solution.py "$EX_PATH" $OPTIONS
