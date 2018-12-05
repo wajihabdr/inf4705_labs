@@ -9,7 +9,7 @@ options = sys.argv[2:]
 fichier = open(nomFichier, 'r')
 nCentreInterets = int(fichier.readline())
 matriceAdjacente = [None] * nCentreInterets
-niveauAppreciation = [None]*nCentreInterets
+niveauAppreciation = [None] * nCentreInterets
 
 for i in range(nCentreInterets):
     line1 = fichier.readline().replace(' \n', '')
@@ -19,8 +19,27 @@ tempsMax = int(fichier.readline())
 
 niveauAppreciation = fichier.readline().replace(' \n', '').split(' ')
 
-# Class Graph
+# Class Parcours
+class Parcours:
+    def __init__(self):
+        self.tempsParcouru = 0
+        self.noeuds = [0]
 
+    def getTempsParcouru(self):
+        return self.tempsParcouru
+
+    def getNoeuds(self):
+        return self.noeuds
+
+    def getLastNoeud(self):
+        return self.noeuds[len(self.noeuds)-1]
+
+    def ajouterNoeud(self, noeud, temps):
+        self.noeuds.append(noeud)
+        self.tempsParcouru += temps
+
+
+# Class Graph
 class Graph:
     def __init__(self, noeuds=[]):
         self.noeuds = set()
@@ -44,34 +63,32 @@ class Graph:
             return 0
         return x / y
 
-    def meilleurChemin(self, parcours, tabNoeuds, tempsMax):
-        tempsParcouru = sum(parcours)
-        depart = parcours[len(parcours)-1]
-        print("somme list : " + str(tempsParcouru))
+    def meilleurChemin(self, Parcours, tabNoeuds, tempsMax):
+        depart = parcours.getLastNoeud()
 
         cheminSelection = 0
         for i in range(len(tabNoeuds)):
             arrivee = tabNoeuds[i]
-            if (tempsParcouru + self.temps[(depart, arrivee)] + self.temps[(arrivee, 0)]) < tempsMax:
+            if (Parcours.getTempsParcouru() + self.temps[(depart, arrivee)] + self.temps[(arrivee, 0)]) < tempsMax:
                 if self.ratio[(depart, cheminSelection)] < self.ratio[(depart, arrivee)]:
                     cheminSelection = arrivee
             else:
                 print('END !!')
 
         tabNoeuds.remove(cheminSelection)
-        return cheminSelection
+        parcours.ajouterNoeud(cheminSelection, self.temps[(depart, cheminSelection)])
+        return parcours
 
     def getAppreciation(self, noeud):
         return niveauAppreciation[noeud]
 
-    def getTemp(self, depart, arrivee):
+    def getTemps(self, depart, arrivee):
         return self.temps[(depart, arrivee)]
 
     def getRatio(self, depart, arrivee):
         return self.ratio[(depart, arrivee)]
 
 # Instanciation de la class graph
-
 tabNoeuds = []
 for i in range(nCentreInterets):
     tabNoeuds.append(i)
@@ -85,13 +102,13 @@ for noeud in range(N):
         graph.ajouterArretes(noeud, voisin, matriceAdjacente[noeud][voisin])
 
 # Debut Algo
-parcours = [0]
+parcours = Parcours()
 tabNoeuds.remove(0)
 
-for index in range(15):
-    parcours.append(graph.meilleurChemin(parcours, tabNoeuds, tempsMax))
-    print(tabNoeuds)
-    print(parcours)
+for index in range(20):
+    parcours = graph.meilleurChemin(parcours, tabNoeuds, tempsMax)
+    print("Temps parcouru : " + str(parcours.getTempsParcouru()))
+    print(parcours.getNoeuds())
 
 # End
 
