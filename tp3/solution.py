@@ -38,6 +38,12 @@ class Parcours:
         self.noeuds.append(noeud)
         self.tempsParcouru += temps
 
+    def printParcours(self):
+        line = ''
+        for i in range(len(self.noeuds)):
+            line += str(self.noeuds[i]) + '\t'
+        line += '0'
+        print(line)
 
 # Class Graph
 class Graph:
@@ -102,28 +108,18 @@ for noeud in range(N):
 
 # Debut Algo
 parcours = Parcours()
-print("Temps parcouru : " + str(parcours.getTempsParcouru()))
-print(parcours.getNoeuds())
+parcours.printParcours()
 
 for index in range(22):
     parcours = graph.meilleurChemin(parcours, tabNoeuds, tempsMax)
-    print("Temps parcouru : " + str(parcours.getTempsParcouru()))
-    print(parcours.getNoeuds())
+    parcours.printParcours()
 
 # End
-
-def printMatrice(matrice):
-    N = len(matrice)
-    for i in range(N):
-        line = ''
-        for j in range(N):
-            line += matrice[i][j] + '\t'
-        print(line)
 
 if '-test' in options:
     print(nCentreInterets)
     print()
-    printMatrice(matriceAdjacente)
+    #printMatrice(matriceAdjacente)
     print()
     print(tempsMax)
     print()
