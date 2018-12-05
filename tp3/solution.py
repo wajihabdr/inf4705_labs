@@ -32,9 +32,8 @@ class Graph :
     
     def ajouterArretes(self, depart, arrivee, temps):
         self.arretes[depart].append(arrivee)
-        self.arretes[arrivee].append(depart)
         self.temps[(depart, arrivee)] = temps
-        self.temps[(arrivee, depart)] = temps
+        print(self.temps)
     
 def solution(graph, debut):
     visitees = {debut : 0}
@@ -67,9 +66,13 @@ def solution(graph, debut):
 tabNoeuds = []
 for item in range(nCentreInterets):
     tabNoeuds.append(item)
-print(tabNoeuds)
 graph = Graph(noeuds = tabNoeuds)
-    
+N = len(matriceAdjacente)
+for noeud in range(N):
+    for voisin in range(N):
+        graph.ajouterArretes(noeud, voisin, matriceAdjacente[noeud][voisin])
+
+          
 
 def printMatrice(matrice):
     N = len(matrice)
