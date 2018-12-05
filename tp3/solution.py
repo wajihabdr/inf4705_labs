@@ -37,45 +37,50 @@ class Graph :
     def printGraph(self):
         print(self.temps)
     
-def solution(graph, debut):
-    visitees = {debut : 0}
-    chemin = {}
-    noeuds = set(graph.noeuds)
+    def solution(self,graph, debut):
+        visitees = {debut : 0}
+        chemin = {}
+        noeuds = set(graph.noeuds)
+        print(graph.noeuds)
 
-    while noeuds:
-        noeudMinimal = None
-        for noeud in range(noeuds): # integrer le temps max
-            if noeud in visitees:
-                if noeudMinimal is None:
-                    noeudMinimal = noeud
-                elif visitees[noeud] < visitees[noeudMinimal]: #ici on cosideres le temps, à changer par ratio temps/appreciation et choisir celui avec le + grd ratio
-                    noeudMinimal = noeud
-        
-        if noeudMinimal is None:
-            break
-        
-        noeuds.remove(noeudMinimal)
-        tempsActuel = visitees[noeudMinimal]
+        while noeuds:
+            noeudMinimal = None
+            for noeud in range(noeuds): # integrer le temps max
+                if noeud in visitees:
+                    if noeudMinimal is None:
+                        noeudMinimal = noeud
+                    elif visitees[noeud] < visitees[noeudMinimal]: #ici on consideres le temps, à changer par ratio temps/appreciation et choisir celui avec le + grd ratio
+                        noeudMinimal = noeud
+            
+            if noeudMinimal is None:
+                break
+            
+            noeuds.remove(noeudMinimal)
+            tempsActuel = visitees[noeudMinimal]
 
-        for arrete in graph.arretes[noeudMinimal]:
-            temps = tempsActuel + graph.temps[(noeudMinimal, arrete)]
-            if arrete not in visitees or temps < tempsMax:
-                visitees[arrete] = temps
-                chemin[arrete] = noeudMinimal
+            for arrete in graph.arretes[noeudMinimal]:
+                temps = tempsActuel + graph.temps[(noeudMinimal, arrete)]
+                if arrete not in visitees or temps < tempsMax:
+                    visitees[arrete] = temps
+                    chemin[arrete] = noeudMinimal
 
-    return visitees, chemin
+        return visitees, chemin
 
 tabNoeuds = []
 for item in range(nCentreInterets):
     tabNoeuds.append(item)
+
 graph = Graph(noeuds = tabNoeuds)
+
 N = len(matriceAdjacente)
+
 for noeud in range(N):
     for voisin in range(N):
         graph.ajouterArretes(noeud, voisin, matriceAdjacente[noeud][voisin])
-graph.printGraph()
 
-          
+# graph.printGraph()
+print(graph.solution(graph,1))
+
 
 def printMatrice(matrice):
     N = len(matrice)
