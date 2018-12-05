@@ -107,7 +107,6 @@ for noeud in range(N):
 # Debut Algo
 parcours = Parcours()
 parcours.printParcours()
-loop = True
 
 #Code pour le thread source : https://stackoverflow.com/questions/11758555/python-do-something-until-keypress-or-timeout
 def parcoursGraphe():
@@ -124,7 +123,9 @@ thread = threading.Thread(target=parcoursGraphe, args=())
 e = threading.Event()
 thread.start()
 while thread.isAlive():
-    try: time.sleep(1)
+    try: 
+        time.sleep(1)
+        input()
     except KeyboardInterrupt: 
         e.set()
         thread.join()
