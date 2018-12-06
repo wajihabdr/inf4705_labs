@@ -44,7 +44,7 @@ class Parcours:
     def printParcours(self):
         line = ''
         for i in range(len(self.noeuds)):
-            line += str(self.noeuds[i]) + '\t'
+            line += str(self.noeuds[i]) + ' '
         if len(self.noeuds) > 1 and self.noeuds[len(self.noeuds)-1] != 0:
             line += '0'
         print(line)
@@ -106,7 +106,6 @@ for noeud in range(N):
 
 # Debut Algo
 parcours = Parcours()
-parcours.printParcours()
 
 #Code pour le thread source : https://stackoverflow.com/questions/11758555/python-do-something-until-keypress-or-timeout
 def parcoursGraphe():
